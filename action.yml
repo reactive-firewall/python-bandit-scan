@@ -1,4 +1,4 @@
-name: 'Bandit Scan'
+name: 'Python Bandit Scan'
 description: 'Bandit Scan'
 branding:
   icon: arrow-left
@@ -113,7 +113,7 @@ runs:
         INPUT_INI_PATH: ${{ inputs.ini_path }}        
 
     - name: Upload artifact
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       with:
         name: results.sarif
         path: results.sarif
