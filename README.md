@@ -11,12 +11,15 @@ Bandit is a tool designed to find common security issues in Python code. This ac
 To run a bandit scan include a step like this:
 
 ```yaml
-    uses: reactive-firewall/bandit-action@v2
-    with: 
+    uses: reactive-firewall/python-bandit-scan@v2.1
+        with: # optional arguments
+        # Github token of the repository (automatically created by Github)
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information.
         path: "."
         level: high
         confidence: high
-        exit_zero: true           
+        # exit with 0, even with results found
+        exit_zero: true # optional, default is DEFAULT
 ```
 
 ## Inputs
