@@ -11,10 +11,7 @@ updates:
     rebase-strategy: "disabled"
     # Labels on pull requests for version updates only
     labels:
-      - "GitHub"
-      - "Testing"
-    assignees:
-      - "reactive-firewall"
+      - "enhancement"  # choosen as closest exsisting label
     commit-message:
       prefix: "[UPDATE] "
       include: "scope"
