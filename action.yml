@@ -1,4 +1,4 @@
-name: 'Bandit Scan'
+name: 'Python Bandit Scan'
 description: 'Bandit Scan'
 branding:
   icon: arrow-left
@@ -30,6 +30,10 @@ inputs:
     default: 'DEFAULT'
   ini_path:
     description: 'path to a .bandit file that supplies command line arguments'
+    required: false
+    default: 'DEFAULT'
+  config_path:
+    description: 'path to a YAML or TOML file that supplies command line arguments'
     required: false
     default: 'DEFAULT'
   GITHUB_TOKEN:
@@ -102,7 +106,13 @@ runs:
         else
             INI_PATH="--ini $INPUT_INI_PATH"
         fi
-        bandit -f sarif -o results.sarif -r $INPUT_PATH $LEVEL $CONFIDENCE $EXCLUDED_PATHS $EXIT_ZERO $SKIPS $INI_PATH
+
+        if [ "$INPUT_CONFIG_PATH" == "DEFAULT" ]; then
+            CONFIG_PATH=""
+        else
+            CONFIG_PATH="-c $INPUT_CONFIG_PATH"
+        fi
+        bandit -f sarif -o results.sarif -r $INPUT_PATH $LEVEL $CONFIDENCE $EXCLUDED_PATHS $EXIT_ZERO $SKIPS $INI_PATH $CONFIG_PATH
       env:
         INPUT_PATH: ${{ inputs.path }}
         INPUT_LEVEL: ${{ inputs.level }}
@@ -110,16 +120,18 @@ runs:
         INPUT_EXCLUDED_PATHS: ${{ inputs.excluded_paths }}
         INPUT_EXIT_ZERO: ${{ inputs.exit_zero }}
         INPUT_SKIPS: ${{ inputs.skips }}
-        INPUT_INI_PATH: ${{ inputs.ini_path }}        
+        INPUT_INI_PATH: ${{ inputs.ini_path }}
+        INPUT_CONFIG_PATH: ${{ inputs.config_path }}
 
     - name: Upload artifact
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       with:
         name: results.sarif
         path: results.sarif
+        overwrite: true
 
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: results.sarif
 

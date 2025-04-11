@@ -12,11 +12,12 @@ To run a bandit scan include a step like this:
 
 ```yaml
     uses: shundor/bandit-action@v1
-    with:
-        path: "."
-        level: high
-        confidence: high
-        exit_zero: true
+    with: # optional arguments
+      path: "."
+      level: high
+      confidence: high
+      # exit with 0, even with results found
+      exit_zero: true  # optional, default is DEFAULT
 ```
 
 ## Inputs
