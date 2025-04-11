@@ -11,7 +11,7 @@ Bandit is a tool designed to find common security issues in Python code. This ac
 To run a bandit scan include a step like this:
 
 ```yaml
-    uses: shundor/bandit-action@v1
+    uses: shundor/python-bandit-scan@v1
     with: # optional arguments
       path: "."
       level: high
