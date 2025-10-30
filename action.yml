@@ -124,14 +124,14 @@ runs:
         INPUT_CONFIG_PATH: ${{ inputs.config_path }}
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: results.sarif
         path: results.sarif
         overwrite: true
 
     - name: Upload SARIF file
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: results.sarif
 
