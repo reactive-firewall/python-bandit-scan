@@ -17,7 +17,7 @@ To run a bandit scan include a step like this:
       level: high
       confidence: high
       # exit with 0, even with results found
-      exit_zero: true  # optional, default is DEFAULT
+      exit_zero: true  # optional, default is DEFAULT (exit with results-based value)
 ```
 
 ## Inputs

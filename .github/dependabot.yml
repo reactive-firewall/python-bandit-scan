@@ -11,7 +11,7 @@ updates:
     rebase-strategy: "disabled"
     # Labels on pull requests for version updates only
     labels:
-      - "enhancement"  # choosen as closest exsisting label
+      - "enhancement"  # chosen as closest existing label
     commit-message:
       prefix: "[UPDATE] "
       include: "scope"
