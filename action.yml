@@ -46,7 +46,13 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        pip install bandit bandit-sarif-formatter
+        echo "::group::Setup Bandit"
+        pip install \
+          'tomli>=1.1.0; python_version < "3.11"' \
+          PyYAML \
+          bandit \
+          bandit-sarif-formatter || exit 1
+        echo "::endgroup::"
 
     - name: Run Bandit scan
       shell: bash
