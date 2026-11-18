@@ -107,12 +107,20 @@ runs:
             INI_PATH="--ini $INPUT_INI_PATH"
         fi
 
+        CONFIG_PATH_ARG=""
         if [ "$INPUT_CONFIG_PATH" == "DEFAULT" ]; then
+            # Clear both
             CONFIG_PATH=""
+            CONFIG_PATH_ARG=""
+            unset CONFIG_PATH 2>dev/null || true  # also try to unset
         else
-            CONFIG_PATH="-c $INPUT_CONFIG_PATH"
+            if [ -n "$INPUT_CONFIG_PATH" ] ; then
+              # Set both (but let bandit validate its own arguments)
+              CONFIG_PATH="$INPUT_CONFIG_PATH" # quote paths on assignment
+              CONFIG_PATH_ARG="-c"
+            fi
         fi
-        bandit -f sarif -o results.sarif -r $INPUT_PATH $LEVEL $CONFIDENCE $EXCLUDED_PATHS $EXIT_ZERO $SKIPS $INI_PATH $CONFIG_PATH
+        bandit -f sarif -o results.sarif -r $INPUT_PATH $LEVEL $CONFIDENCE $EXCLUDED_PATHS $EXIT_ZERO $SKIPS $INI_PATH $CONFIG_PATH_ARG ${CONFIG_PATH:-}
       env:
         INPUT_PATH: ${{ inputs.path }}
         INPUT_LEVEL: ${{ inputs.level }}
